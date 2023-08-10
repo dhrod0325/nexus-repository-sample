@@ -1,0 +1,7 @@
+# Project exclude paths
+/.gradle/
+/build/
+/nexus-get/build/
+/nexus-get/build/classes/java/main/
+/nexus-put/build/
+/nexus-put/build/classes/java/main/

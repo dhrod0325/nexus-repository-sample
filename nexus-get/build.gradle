@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+
+repositories {
+    maven {
+        url "http://localhost:8081/repository/maven-public/"
+        allowInsecureProtocol true
+    }
+
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation 'org.example:nexus-put:1.0'
+}
+
+test {
+    useJUnitPlatform()
+}

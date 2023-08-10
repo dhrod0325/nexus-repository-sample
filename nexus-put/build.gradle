@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: 'maven-publish'
+
+group 'org.example'
+version '1.0'
+
+repositories {
+    maven {
+        url "http://localhost:8081/repository/maven-public/"
+        allowInsecureProtocol true
+    }
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            if (project.version.toString().endsWith("SNAPSHOT")) {
+                url "http://localhost:8081/repository/maven-snapshots/"
+            } else {
+                url "http://localhost:8081/repository/maven-releases/"
+            }
+            credentials {
+                username project.repoUser
+                password project.repoPassword
+            }
+            allowInsecureProtocol true
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            artifact("build/libs/nexus-put-1.0.jar") {
+                extension 'jar'
+            }
+        }
+    }
+}
+
+publishMavenPublicationToMavenRepository.dependsOn(jar)
